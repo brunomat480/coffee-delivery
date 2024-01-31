@@ -7,101 +7,114 @@ import { ProductCard } from '../../components/ProductCard';
 
 const cafes = [
   {
-    image: '../../assets/cafes/traditional-express.svg',
+    id: 1,
+    image: '/cafes/traditional-express.svg',
     name: 'Expresso Tradicional',
-    type: ['tradicional'],
+    types: ['tradicional'],
     description: 'O tradicional café feito com água quente e grãos moídos',
     price: 9.90,
   },
   {
-    image: '../../assets/cafes/american-express.svg',
+    id: 2,
+    image: 'cafes/american-express.svg',
     name: 'Expresso Americano',
-    type: ['tradicional'],
+    types: ['tradicional'],
     description: 'Expresso diluído, menos intenso que o tradicional',
     price: 9.90,
   },
   {
-    image: '../../assets/cafes/creamy-espresso.svg',
+    id: 3,
+    image: 'cafes/creamy-espresso.svg',
     name: 'Expresso Cremoso',
-    type: ['tradicional'],
+    types: ['tradicional'],
     description: 'Café expresso tradicional com espuma cremosa',
     price: 9.90,
   },
   {
-    image: '../../assets/cafes/iced-espresso.svg',
+    id: 4,
+    image: 'cafes/iced-espresso.svg',
     name: 'Expresso Gelado',
-    type: ['tracional', 'com leite'],
+    types: ['tracional', 'com leite'],
     description: 'Bebida preparada com café expresso e cubos de gelo',
     price: 9.90,
   },
   {
-    image: '../../assets/cafes/coffee-with-milk.svg',
+    id: 5,
+    image: 'cafes/coffee-with-milk.svg',
     name: 'Café com Leite',
-    type: ['tradicional', 'com leite'],
+    types: ['tradicional', 'com leite'],
     description: 'Meio a meio de expresso tradicional com leite vaporizado',
     price: 9.90,
   },
   {
-    image: '../../assets/cafes/latter.svg',
+    id: 6,
+    image: 'cafes/latte.svg',
     name: 'Latter',
-    type: ['tradicional', 'com leite'],
+    types: ['tradicional', 'com leite'],
     description: 'Uma dose de café expresso com o dobro de leite e espuma cremosa',
     price: 9.90,
   },
   {
-    image: '../../assets/cafes/cappuccino.svg',
-    name: 'Latter',
-    type: ['tradicional', 'com leite'],
+    id: 7,
+    image: 'cafes/cappuccino.svg',
+    name: 'Capuccino',
+    types: ['tradicional', 'com leite'],
     description: 'Bebida com canela feita de doses iguais de café, leite e espuma',
     price: 9.90,
   },
   {
-    image: '../../assets/cafes/macchiato.svg',
+    id: 8,
+    image: 'cafes/macchiato.svg',
     name: 'Macchiato',
-    type: ['tradicional', 'com leite'],
+    types: ['tradicional', 'com leite'],
     description: 'Café expresso misturado com um pouco de leite quente e espuma',
     price: 9.90,
   },
   {
-    image: '../../assets/cafes/mocaccino.svg',
+    id: 9,
+    image: 'cafes/mocaccino.svg',
     name: 'Mocaccino',
-    type: ['tradicional', 'com leite'],
+    types: ['tradicional', 'com leite'],
     description: 'Café expresso com calda de chocolate, pouco leite e espuma',
     price: 9.90,
   },
   {
-    image: '../../assets/cafes/hot-chocolate.svg',
+    id: 10,
+    image: 'cafes/hot-chocolate.svg',
     name: 'Chocolate Quente',
-    type: ['tradicional', 'com leite'],
+    types: ['tradicional', 'com leite'],
     description: 'Bebida feita com chocolate dissolvido no leite quente e café',
     price: 9.90,
   },
   {
-    image: '../../assets/cafes/cuban.svg',
+    id: 11,
+    image: 'cafes/cuban.svg',
     name: 'Cubano',
-    type: ['tradicional', 'alicoólico', 'cubano'],
+    types: ['tradicional', 'alicoólico', 'cubano'],
     description: 'Drink gelado de café expresso com rum, creme de leite e hortelã',
     price: 9.90,
   },
   {
-    image: '../../assets/cafes/hawaiian.svg',
+    id: 12,
+    image: 'cafes/hawaiian.svg',
     name: 'Havaiano',
-    type: ['especial'],
+    types: ['especial'],
     description: 'Bebida adocicada preparada com café e leite de coco',
     price: 9.90,
   },
   {
-    image: '../../assets/cafes/arabic.svg',
+    id: 13,
+    image: 'cafes/arabic.svg',
     name: 'Árabe',
-    type: ['especial'],
+    types: ['especial'],
     description: 'Bebida preparada com grãos de café árabe e especiarias',
     price: 9.90,
   },
-
   {
-    image: '../../assets/cafes/irish.svg',
+    id: 14,
+    image: 'cafes/irish.svg',
     name: 'Irlandês',
-    type: ['especial', 'alcoólico'],
+    types: ['especial', 'alcoólico'],
     description: 'Bebida a base de café, uísque irlandês, açúcar e chantilly',
     price: 9.90,
   }
@@ -159,6 +172,19 @@ export function Home() {
 
       <ProductsContainer>
         <h2>Nossos cafés</h2>
+
+        <div>
+          {cafes.map((coffee) => (
+            <ProductCard
+              key={coffee.id}
+              image={coffee.image}
+              name={coffee.name}
+              description={coffee.description}
+              types={coffee.types}
+              price={coffee.price}
+            />
+          ))}
+        </div>
       </ProductsContainer>
     </>
 
