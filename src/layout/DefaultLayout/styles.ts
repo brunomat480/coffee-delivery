@@ -5,5 +5,4 @@ export const LayoutContainer = styled.div`
   min-width: 480px;
 
   margin: auto;
-
 `;
