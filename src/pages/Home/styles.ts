@@ -75,4 +75,21 @@ export const Item = styled.div<ItemProps>`
 
 export const ProductsContainer = styled.section`
   margin-top: 2rem;
+  margin-bottom: 9.8125rem;
+
+  h2 {
+    font-family: 'baloo 2', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: ${({ theme }) => theme.colors['base-subtitle']};
+  }
+
+  & > div{
+    margin-top: 3.375rem;
+
+    display: flex;
+    align-items: center;
+    gap: 2.5rem 2rem;
+    flex-wrap: wrap;
+  }
 `;

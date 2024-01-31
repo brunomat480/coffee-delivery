@@ -15,7 +15,7 @@ export const ProductCardContainer = styled.div`
   border-radius: 6px 36px 6px 36px;
 
   img {
-    margin-top: -1rem;
+    margin-top: -1.2rem;
   }
 
   h3 {
@@ -32,6 +32,12 @@ export const ProductCardContainer = styled.div`
     color: ${({ theme }) => theme.colors['base-label']};
 
     margin-top: .5rem;
+  }
+
+  .types {
+    display: flex;
+    align-items: center;
+    gap: .25rem;
   }
 `;
 

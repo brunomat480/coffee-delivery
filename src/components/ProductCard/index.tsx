@@ -1,28 +1,40 @@
 import { Minus, Plus, ShoppingCart } from '@phosphor-icons/react';
-import traditionalExpress from '../../assets/cafes/traditional-express.svg';
 import { useTheme } from 'styled-components';
 import { ButtonAddProduct, Price, ProductCardContainer, ProductControls, Quantity, Type } from './styles';
 import { formatCurrency } from '../../utils/formatCurrency';
 
-export function ProductCard() {
+interface ProductCardProps {
+  image: string;
+  name: string;
+  types: string[];
+  description: string;
+  price: number;
+}
+
+export function ProductCard({ image, name, types, description, price }: ProductCardProps) {
   const { colors } = useTheme();
 
   return (
     <ProductCardContainer>
-      <img src={traditionalExpress} alt="" />
+      <img src={image} />
 
-      <Type>
-        tradicional
-      </Type>
+      <div className="types">
+        {types.map((type) => (
+          <Type key={Math.random()}>
+            {type}
+          </Type>
+        ))}
+      </div>
+
 
       <h3>
-        Expresso Tradicional
+        {name}
       </h3>
 
-      <p>O tradicional café feito com água quente e grãos moídos</p>
+      <p>{description}</p>
 
       <ProductControls>
-        <Price><small>R$</small> {formatCurrency(9.90)}</Price>
+        <Price><small>R$</small> {formatCurrency(price)}</Price>
 
         <div>
           <Quantity>
