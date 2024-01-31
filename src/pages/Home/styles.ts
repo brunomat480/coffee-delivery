@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 export const HeaderContainer = styled.section`
   margin-top: 5.875rem;
+  margin-bottom: 5.75rem;
 
   display: flex;
   align-items: center;
@@ -45,15 +46,11 @@ export const ItemsGroup = styled.div`
     align-items: center;
 
     span {
-    margin-left: .75rem;
-
-    font-size: 1rem;
-    font-weight: 400;
-    color: ${({ theme }) => theme.colors['base-text']};
+      margin-left: .75rem;
+      font-size: 1rem;
+      color: ${({ theme }) => theme.colors['base-text']};
+    }
   }
-  }
-
-
 `;
 
 const ITEMS_COLORS = {
@@ -64,14 +61,18 @@ const ITEMS_COLORS = {
 } as const;
 
 interface ItemProps {
-  itemColor: keyof typeof ITEMS_COLORS;
+  $itemColor: keyof typeof ITEMS_COLORS;
 }
 
 export const Item = styled.div<ItemProps>`
   padding: .5rem;
   border-radius: 9999px;
-
-  background: ${({ theme, itemColor }) => theme.colors[ITEMS_COLORS[itemColor]]};
-
   display: inline-flex;
+
+  background: ${({ theme, $itemColor }) => theme.colors[ITEMS_COLORS[$itemColor]]};
+
+`;
+
+export const ProductsContainer = styled.section`
+  margin-top: 2rem;
 `;

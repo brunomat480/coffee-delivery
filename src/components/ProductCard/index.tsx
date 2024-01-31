@@ -1,7 +1,8 @@
-import { ShoppingCart } from '@phosphor-icons/react';
+import { Minus, Plus, ShoppingCart } from '@phosphor-icons/react';
 import traditionalExpress from '../../assets/cafes/traditional-express.svg';
 import { useTheme } from 'styled-components';
-import { ProductCardContainer } from './sytyles';
+import { ButtonAddProduct, Price, ProductCardContainer, ProductControls, Quantity, Type } from './styles';
+import { formatCurrency } from '../../utils/formatCurrency';
 
 export function ProductCard() {
   const { colors } = useTheme();
@@ -10,25 +11,35 @@ export function ProductCard() {
     <ProductCardContainer>
       <img src={traditionalExpress} alt="" />
 
-      <div>
-        <span>tradicional</span>
-      </div>
+      <Type>
+        tradicional
+      </Type>
+
+      <h3>
+        Expresso Tradicional
+      </h3>
+
       <p>O tradicional café feito com água quente e grãos moídos</p>
 
-      <div>
-        <span>9.90</span>
-        <div>
-          <div>
-            <button type='button'>-</button>
-            <span>1</span>
-            <button type='button'>+</button>
-          </div>
+      <ProductControls>
+        <Price><small>R$</small> {formatCurrency(9.90)}</Price>
 
-          <button type='button'>
+        <div>
+          <Quantity>
+            <button type="button">
+              <Minus color={colors.purple} size={14} />
+            </button>
+            <span>1</span>
+            <button type="button">
+              <Plus color={colors.purple} size={14} />
+            </button>
+          </Quantity>
+
+          <ButtonAddProduct type="button">
             <ShoppingCart color={colors['base-card']} size={22} weight='fill' />
-          </button>
+          </ButtonAddProduct>
         </div>
-      </div>
+      </ProductControls>
     </ProductCardContainer>
   );
 }

@@ -1,5 +1,5 @@
 import { Coffee, Package, ShoppingCart, Timer } from '@phosphor-icons/react';
-import { HeaderContainer, Item, ItemsContainer, ItemsGroup } from './styles';
+import { HeaderContainer, Item, ItemsContainer, ItemsGroup, ProductsContainer } from './styles';
 import { useTheme } from 'styled-components';
 
 import coffee from '../../assets/coffee.svg';
@@ -119,19 +119,17 @@ export function Home() {
             <p>Com o Coffee Delivery você recebe seu café onde estiver, a qualquer hora</p>
           </div>
 
-
           <ItemsContainer>
-
             <ItemsGroup>
               <div>
-                <Item itemColor='yellowDark'>
+                <Item $itemColor='yellowDark'>
                   <ShoppingCart color={colors.background} size={16} weight='fill' />
                 </Item>
                 <span>Compra simples e segura</span>
               </div>
 
               <div>
-                <Item itemColor='yellow'>
+                <Item $itemColor='yellow'>
                   <Timer color={colors.background} size={16} weight='fill' />
                 </Item>
                 <span>Entrega rápida e rastreada</span>
@@ -140,14 +138,14 @@ export function Home() {
 
             <ItemsGroup>
               <div>
-                <Item itemColor='base'>
+                <Item $itemColor='base'>
                   <Package color={colors.background} size={16} weight='fill' />
                 </Item>
                 <span>Embalagem mantém o café intacto</span>
               </div>
 
               <div>
-                <Item itemColor='purple'>
+                <Item $itemColor='purple'>
                   <Coffee color={colors.background} size={16} weight='fill' />
                 </Item>
                 <span>O café chega fresquinho até você</span>
@@ -159,11 +157,9 @@ export function Home() {
         <img src={coffee} alt="Imagem de um café" />
       </HeaderContainer >
 
-      <div>
+      <ProductsContainer>
         <h2>Nossos cafés</h2>
-
-        <ProductCard />
-      </div>
+      </ProductsContainer>
     </>
 
   );
