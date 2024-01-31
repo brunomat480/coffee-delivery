@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 
-export const HomeContainer = styled.section`
+export const HeaderContainer = styled.section`
   margin-top: 5.875rem;
 
   display: flex;
@@ -29,22 +29,6 @@ export const HomeContainer = styled.section`
 
 `;
 
-// export const ItemsContainer = styled.div`
-//   display: flex;
-//   gap: 2.5rem;
-// /*
-//   span {
-//     margin-right: .75rem;
-
-//     font-size: 1rem;
-//     color: ${({ theme }) => theme.colors['base-text']};
-//   } */
-// `;
-
-// export const ItemsGroup = styled.div`
-
-// `;
-
 export const ItemsContainer = styled.div`
   display: flex;
   align-items: center;
@@ -56,14 +40,20 @@ export const ItemsGroup = styled.div`
   flex-direction: column;
   gap: 1.25rem;
 
+  div {
+    display: flex;
+    align-items: center;
 
-  span {
+    span {
     margin-left: .75rem;
 
-    font-size: .90rem;
+    font-size: 1rem;
     font-weight: 400;
     color: ${({ theme }) => theme.colors['base-text']};
   }
+  }
+
+
 `;
 
 const ITEMS_COLORS = {
