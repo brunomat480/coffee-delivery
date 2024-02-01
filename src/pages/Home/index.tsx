@@ -147,26 +147,21 @@ export function Home() {
   const { colors } = useTheme();
 
   const [ProductCart, setProductCart] = useState<(Product | null)[]>([]);
-  const [quantityProductAdd, setQuantityProductAdd] = useState(0);
+  const [quantityProductAdd, setQuantityProductAdd] = useState(1);
 
   function handleAddProductCart(coffee: Product) {
     const productAlreadyAdded = ProductCart.some((product) => product?.id === coffee.id);
     if (!productAlreadyAdded) {
       setProductCart((state) => [...state, { ...coffee, quantity: quantityProductAdd }]);
+    } else {
+      setProductCart((state) => state.map((product) => product?.id === coffee.id && product.quantity === coffee.quantity ? { ...product, quantity: product.quantity + quantityProductAdd } : product));
     }
-
-    setProductCart((state) => state.map((product) => product?.id === coffee.id && product.quantity !== coffee.quantity ? { ...product, quantity: quantityProductAdd } : product));
+    setQuantityProductAdd(1);
   }
 
   function handleProductQuantityControl(quantity: number) {
-    setQuantityProductAdd(quantity);
-
-    // setAddProductCart((state) => (
-    //   state.map((product) => product?.id === id ? { ...product, quantity } : product)
-    // ));
+    setQuantityProductAdd((state) => state <= 0 ? 1 : quantity);
   }
-
-  console.log(ProductCart);
 
   return (
     <>

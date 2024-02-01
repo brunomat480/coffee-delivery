@@ -29,19 +29,17 @@ export function ProductCard({
   const [quantityProducts, setQuantityProducts] = useState(1);
 
   function handleAddQuantityOfProductToCart() {
-    setQuantityProducts((state) => state + 1);
-    onProductQuantityControl(quantityProducts + 1);
+    const addNewQuantity = quantityProducts + 1;
+    setQuantityProducts(addNewQuantity);
+    onProductQuantityControl(addNewQuantity);
   }
 
   function handleRemoveProductQuantityFromCart() {
-    setQuantityProducts((state) => {
-      if (state !== 1) {
-        return state - 1;
-      }
+    const removeNewQuantity = quantityProducts !== 1 ? quantityProducts - 1 : 1;
 
-      return 1;
-    });
-    onProductQuantityControl(quantityProducts + 1);
+    setQuantityProducts(removeNewQuantity);
+
+    onProductQuantityControl(removeNewQuantity);
   }
 
   function handleAddProduct() {
@@ -73,7 +71,6 @@ export function ProductCard({
               <Minus color={colors.purple} size={14} />
             </button>
             <span>{quantityProducts}</span>
-            
             <button type="button" onClick={handleAddQuantityOfProductToCart}>
               <Plus color={colors.purple} size={14} />
             </button>
