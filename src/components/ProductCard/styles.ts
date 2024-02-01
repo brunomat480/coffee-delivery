@@ -2,17 +2,15 @@ import styled from 'styled-components';
 
 export const ProductCardContainer = styled.div`
   width: 16rem;
-  /* height: 19.375rem; */
   text-align: center;
-  padding-inline: 1.25rem;
-  padding-bottom: 1.25rem;
+  padding: 0 1.25rem 1.25rem;
 
   display: flex;
   flex-direction: column;
   align-items: center;
 
   background: ${({ theme }) => theme.colors['base-card']};
-  border-radius: 6px 36px 6px 36px;
+  border-radius: 6px 36px;
 
   img {
     margin-top: -1.2rem;
@@ -33,17 +31,18 @@ export const ProductCardContainer = styled.div`
 
     margin-top: .5rem;
   }
+`;
 
-  .types {
-    display: flex;
-    align-items: center;
-    gap: .25rem;
-  }
+export const TypeGroups = styled.div`
+  margin-top: .75rem;
+
+  display: flex;
+  align-items: center;
+  gap: .25rem;
 `;
 
 export const Type = styled.span`
   padding: .25rem .5rem;
-  margin-top: .75rem;
   background: ${({ theme }) => theme.colors['yellow-light']};
   border-radius: 100px;
 
@@ -60,7 +59,6 @@ export const ProductControls = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
-
 
   & > div {
     display: flex;
@@ -82,9 +80,9 @@ export const Price = styled.span`
   }
 `;
 
-export const Quantity = styled.div`
+export const QuantityProducts = styled.div`
   height: 2.375rem;
-  padding: .5rem;
+  padding-inline: .5rem;
   border-radius: 6px;
 
   background: ${({ theme }) => theme.colors['base-button']};
@@ -97,6 +95,13 @@ export const Quantity = styled.div`
 
   button {
     line-height: 0;
+    cursor: pointer;
+
+    &:hover {
+      svg {
+        fill: ${({ theme }) => theme.colors['purple-dark']};
+      }
+    }
   }
 `;
 
@@ -106,6 +111,7 @@ export const ButtonAddProduct = styled.button`
 
   background: ${({ theme }) => theme.colors['purple-dark']};
   cursor: pointer;
+  transition: background .1s;
 
   &:hover {
     background: ${({ theme }) => theme.colors.purple};
