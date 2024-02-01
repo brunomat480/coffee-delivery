@@ -1,6 +1,6 @@
 import { Minus, Plus, ShoppingCart } from '@phosphor-icons/react';
 import { useTheme } from 'styled-components';
-import { ButtonAddProduct, Price, ProductCardContainer, ProductControls, Quantity, Type } from './styles';
+import { ButtonAddProduct, Price, ProductCardContainer, ProductControls, QuantityProducts, Type, TypeGroups } from './styles';
 import { formatCurrency } from '../../utils/formatCurrency';
 
 interface ProductCardProps {
@@ -11,33 +11,35 @@ interface ProductCardProps {
   price: number;
 }
 
-export function ProductCard({ image, name, types, description, price }: ProductCardProps) {
+export function ProductCard({
+  image,
+  name,
+  types,
+  description,
+  price
+}: ProductCardProps) {
   const { colors } = useTheme();
 
   return (
     <ProductCardContainer>
       <img src={image} />
 
-      <div className="types">
+      <TypeGroups>
         {types.map((type) => (
           <Type key={Math.random()}>
             {type}
           </Type>
         ))}
-      </div>
+      </TypeGroups>
 
-
-      <h3>
-        {name}
-      </h3>
-
+      <h3>{name}</h3>
       <p>{description}</p>
 
       <ProductControls>
         <Price><small>R$</small> {formatCurrency(price)}</Price>
 
         <div>
-          <Quantity>
+          <QuantityProducts>
             <button type="button">
               <Minus color={colors.purple} size={14} />
             </button>
@@ -45,10 +47,14 @@ export function ProductCard({ image, name, types, description, price }: ProductC
             <button type="button">
               <Plus color={colors.purple} size={14} />
             </button>
-          </Quantity>
+          </QuantityProducts>
 
           <ButtonAddProduct type="button">
-            <ShoppingCart color={colors['base-card']} size={22} weight='fill' />
+            <ShoppingCart
+              color={colors['base-card']}
+              size={22}
+              weight='fill'
+            />
           </ButtonAddProduct>
         </div>
       </ProductControls>

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import { HeaderContainer } from './styles';
+import { HeaderContainer, Location } from './styles';
 
 import { MapPin, ShoppingCart } from '@phosphor-icons/react';
 import { useTheme } from 'styled-components';
@@ -15,13 +15,21 @@ export function Header() {
       <img src={logo} alt="Logo" />
 
       <div>
-        <span>
-          <MapPin color={theme.colors.purple} size={22} weight="fill" />
+        <Location>
+          <MapPin
+            color={theme.colors.purple}
+            size={22}
+            weight="fill"
+          />
           Porto Alegre, RS
-        </span>
+        </Location>
 
         <Link to="/">
-          <ShoppingCart color={theme.colors['yellow-dark']} size={22} weight="fill" />
+          <ShoppingCart
+            color={theme.colors['yellow-dark']}
+            size={22}
+            weight="fill"
+          />
         </Link>
       </div>
     </HeaderContainer>
