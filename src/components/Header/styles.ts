@@ -3,27 +3,22 @@ import styled from 'styled-components';
 export const HeaderContainer = styled.header`
   padding-block: 2rem;
 
+  /* position: fixed;
+  width: 100%;
+  top: 0;
+  right: 0;
+
+  padding-inline: 2rem; */
+
+
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
   div {
     display: flex;
     align-items: center;
     gap: .75rem;
-
-    span {
-      padding: .5rem;
-
-      display: flex;
-      align-items: center;
-      gap: .25rem;
-
-      background: ${({ theme }) => theme.colors['purple-light']};
-      color: ${({ theme }) => theme.colors['purple-dark']};
-
-      font-size: .875rem;
-      border-radius: 6px;
-    }
 
     a {
       padding: .5rem;
@@ -31,6 +26,18 @@ export const HeaderContainer = styled.header`
 
       background: ${({ theme }) => theme.colors['yellow-light']};
     }
-
   }
+`;
+
+export const Location = styled.span`
+  padding: .5rem;
+  font-size: .875rem;
+  border-radius: 6px;
+
+  display: flex;
+  align-items: center;
+  gap: .25rem;
+
+  background: ${({ theme }) => theme.colors['purple-light']};
+  color: ${({ theme }) => theme.colors['purple-dark']};
 `;
