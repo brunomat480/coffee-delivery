@@ -73,6 +73,7 @@ export function ProductCard({
               <Minus color={colors.purple} size={14} />
             </button>
             <span>{quantityProducts}</span>
+            
             <button type="button" onClick={handleAddQuantityOfProductToCart}>
               <Plus color={colors.purple} size={14} />
             </button>
