@@ -6,12 +6,15 @@ import { MapPin, ShoppingCart } from '@phosphor-icons/react';
 import { useTheme } from 'styled-components';
 
 import logo from '../../assets/logo.svg';
+import { useContext } from 'react';
+import { ProductContext } from '../../context/ProductsContext';
 
 export function Header() {
   const theme = useTheme();
+  const { productCart } = useContext(ProductContext);
 
   return (
-    <HeaderContainer>
+    <HeaderContainer $productCart={productCart}>
       <img src={logo} alt="Logo" />
 
       <div>

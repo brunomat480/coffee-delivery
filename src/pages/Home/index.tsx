@@ -4,7 +4,6 @@ import { useTheme } from 'styled-components';
 
 import coffee from '../../assets/coffee.svg';
 import { ProductCard } from '../../components/ProductCard';
-import { useState } from 'react';
 
 const cafes = [
   {
@@ -135,33 +134,9 @@ const cafes = [
   }
 ];
 
-export interface Product {
-  id: number;
-  image: string;
-  name: string;
-  price: number;
-  quantity: number
-}
 
 export function Home() {
   const { colors } = useTheme();
-
-  const [ProductCart, setProductCart] = useState<(Product | null)[]>([]);
-  const [quantityProductAdd, setQuantityProductAdd] = useState(1);
-
-  function handleAddProductCart(coffee: Product) {
-    const productAlreadyAdded = ProductCart.some((product) => product?.id === coffee.id);
-    if (!productAlreadyAdded) {
-      setProductCart((state) => [...state, { ...coffee, quantity: quantityProductAdd }]);
-    } else {
-      setProductCart((state) => state.map((product) => product?.id === coffee.id && product.quantity === coffee.quantity ? { ...product, quantity: product.quantity + quantityProductAdd } : product));
-    }
-    setQuantityProductAdd(1);
-  }
-
-  function handleProductQuantityControl(quantity: number) {
-    setQuantityProductAdd((state) => state <= 0 ? 1 : quantity);
-  }
 
   return (
     <>
@@ -219,8 +194,6 @@ export function Home() {
             <ProductCard
               key={coffee.id}
               product={coffee}
-              onAddProductCart={() => handleAddProductCart(coffee)}
-              onProductQuantityControl={handleProductQuantityControl}
             />
           ))}
         </div>
