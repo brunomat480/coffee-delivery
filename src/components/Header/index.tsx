@@ -17,7 +17,9 @@ export function Header() {
 
   return (
     <HeaderContainer $productCart={productCart}>
-      <img src={logo} alt="Logo" />
+      <Link to="/">
+        <img src={logo} alt="Logo" />
+      </Link>
 
       <div>
         <Location>
@@ -29,7 +31,7 @@ export function Header() {
           Porto Alegre, RS
         </Location>
 
-        <Link to="/">
+        <Link to="/checkout">
           <ShoppingCart
             color={theme.colors['yellow-dark']}
             size={22}
