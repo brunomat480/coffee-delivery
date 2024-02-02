@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const CheckoutContainer = styled.div`
   margin-top: 9rem;
@@ -106,8 +106,6 @@ export const Form = styled.div`
   }
 
   .location {
-
-
     div {
       width: 100%;
       display: flex;
@@ -120,5 +118,76 @@ export const Form = styled.div`
     & > input:last-child {
       width: 3.75rem;
     }
+  }
+`;
+
+export const FormPaymentContiner = styled.div`
+  margin-top: .75rem;
+  margin-bottom: 15rem;
+  padding: 2.5rem;
+  width: 40rem;
+  background: ${({ theme }) => theme.colors['base-card']};
+  border-radius: 6px;
+  background: ${({ theme }) => theme.colors['base-card']};
+
+  header {
+    display: flex;
+    gap: .5rem;
+    align-items: start;
+
+    div {
+      line-height: 130%;
+
+      h3 {
+        font-size: 1rem;
+        font-weight: 400;
+        color: ${({ theme }) => theme.colors['base-subtitle']};
+      }
+
+      p {
+        font-size: 0.875rem;
+        color: ${({ theme }) => theme.colors['base-text']};
+      }
+    }
+  }
+`;
+
+export const FormPaymentGroup = styled.div`
+  margin-top: 2rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+interface PaymentButtonProps {
+  $payment: boolean;
+}
+
+export const PaymentButton = styled.button<PaymentButtonProps>`
+  width: 11.166875rem;
+  padding-block: 1.09375rem;
+  background: ${({ theme }) => theme.colors['base-button']};
+  text-transform: uppercase;
+  font-size: .75rem;
+  color: ${({ theme }) => theme.colors['base-text']};
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .75rem;
+
+  outline: none;
+  border: 2px solid transparent;
+  border-radius: 6px;
+
+  cursor: pointer;
+
+  ${({ $payment }) => $payment && css`
+    border: 2px solid ${({ theme }) => theme.colors.purple};
+  `}
+
+  &:focus {
+    border: 2px solid ${({ theme }) => theme.colors.purple};
   }
 `;

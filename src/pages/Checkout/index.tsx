@@ -1,9 +1,33 @@
-import { MapPinLine } from '@phosphor-icons/react';
-import { CheckoutContainer, Form, FormContainer, FormGroup } from './styles';
+import { Bank, CreditCard, CurrencyDollar, MapPinLine, Money } from '@phosphor-icons/react';
+import { CheckoutContainer, Form, FormContainer, FormGroup, FormPaymentContiner, FormPaymentGroup, PaymentButton } from './styles';
 import { useTheme } from 'styled-components';
+import { useState } from 'react';
+
+const paymentOptions = [
+  {
+    icon: <CreditCard color='#8047F8' size={16} />,
+    name: 'cartão de crédito',
+  },
+  {
+    icon: <Bank color='#8047F8' size={16} />,
+    name: 'cartão de débito',
+  },
+  {
+    icon: <Money color='#8047F8' size={16} />,
+    name: 'dinheiro',
+  },
+];
 
 export function Checkout() {
   const { colors } = useTheme();
+
+  const [formPayment, setFormPayment] = useState('');
+
+  function handleSelectingPaymentMethod(payment: string) {
+    setFormPayment(payment);
+  }
+
+  console.log(formPayment);
 
   return (
     <CheckoutContainer>
@@ -34,10 +58,34 @@ export function Checkout() {
                 <input type="text" placeholder="Bairro" />
                 <input type="text" placeholder="Cidade" />
               </div>
-              <input type="text" placeholder="UF" />
+              <input type="text" placeholder="UF" maxLength={2} />
             </div>
           </Form>
         </FormContainer>
+
+        <FormPaymentContiner>
+          <header>
+            <CurrencyDollar color={colors.purple} size={22} />
+            <div>
+              <h3>Pagamento</h3>
+              <p>O pagamento é feito na entrega. Escolha a forma que deseja pagar</p>
+            </div>
+          </header>
+
+          <FormPaymentGroup>
+            {paymentOptions.map((option) => (
+              <PaymentButton
+                key={option.name}
+                type="button"
+                onClick={() => handleSelectingPaymentMethod(option.name)}
+                $payment={formPayment === option.name}
+              >
+                {option.icon}
+                {option.name}
+              </PaymentButton>
+            ))}
+          </FormPaymentGroup>
+        </FormPaymentContiner>
       </FormGroup>
     </CheckoutContainer>
   );
