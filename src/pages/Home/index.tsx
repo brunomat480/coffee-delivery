@@ -163,6 +163,8 @@ export function Home() {
     setQuantityProductAdd((state) => state <= 0 ? 1 : quantity);
   }
 
+  console.log(ProductCart);
+
   return (
     <>
       <HeaderContainer>
