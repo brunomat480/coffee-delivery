@@ -2,7 +2,8 @@ import { Minus, Plus, ShoppingCart } from '@phosphor-icons/react';
 import { useTheme } from 'styled-components';
 import { ButtonAddProduct, Price, ProductCardContainer, ProductControls, QuantityProducts, Type, TypeGroups } from './styles';
 import { formatCurrency } from '../../utils/formatCurrency';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { ProductContext } from '../../context/ProductsContext';
 
 
 interface ProductType {
@@ -12,26 +13,25 @@ interface ProductType {
   types: string[];
   description: string;
   price: number;
+  quantity: number
 }
 interface ProductCardProps {
   product: ProductType;
-  onAddProductCart: () => void;
-  onProductQuantityControl: (quantity: number) => void
 }
 
 export function ProductCard({
   product,
-  onAddProductCart,
-  onProductQuantityControl
 }: ProductCardProps) {
   const { colors } = useTheme();
+  const { handleAddProductCart, handleProductQuantityControl } = useContext(ProductContext);
+
 
   const [quantityProducts, setQuantityProducts] = useState(1);
 
   function handleAddQuantityOfProductToCart() {
     const addNewQuantity = quantityProducts + 1;
     setQuantityProducts(addNewQuantity);
-    onProductQuantityControl(addNewQuantity);
+    handleProductQuantityControl(addNewQuantity);
   }
 
   function handleRemoveProductQuantityFromCart() {
@@ -39,11 +39,11 @@ export function ProductCard({
 
     setQuantityProducts(removeNewQuantity);
 
-    onProductQuantityControl(removeNewQuantity);
+    handleProductQuantityControl(removeNewQuantity);
   }
 
   function handleAddProduct() {
-    onAddProductCart();
+    handleAddProductCart(product);
     setQuantityProducts(1);
   }
 
