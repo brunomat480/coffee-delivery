@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
-
 export const HeaderContainer = styled.section`
-  margin-top: 5.875rem;
+  margin-top: 12.25rem;
   margin-bottom: 5.75rem;
 
   display: flex;

@@ -15,10 +15,25 @@ interface HeaderContainerProps {
 
 export const HeaderContainer = styled.header<HeaderContainerProps>`
   padding-block: 2rem;
+  background: ${({ theme }) => theme.colors.background};
 
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  padding-inline: 7rem;
+
+  @media only screen and (max-width: 767px)  {
+    padding-inline: 2rem;
+  }
+
+  @media (min-width: 768px) and (max-width: 991px) {
+    padding-inline: 2rem;
+  }
 
   div {
     display: flex;

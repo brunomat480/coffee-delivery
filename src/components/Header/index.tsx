@@ -1,13 +1,15 @@
-import { Link } from 'react-router-dom';
-
 import { HeaderContainer, Location } from './styles';
 
-import { MapPin, ShoppingCart } from '@phosphor-icons/react';
-import { useTheme } from 'styled-components';
+import { Link } from 'react-router-dom';
 
-import logo from '../../assets/logo.svg';
+import { useTheme } from 'styled-components';
 import { useContext } from 'react';
 import { ProductContext } from '../../context/ProductsContext';
+
+import { MapPin, ShoppingCart } from '@phosphor-icons/react';
+
+import logo from '../../assets/logo.svg';
+
 
 export function Header() {
   const theme = useTheme();
