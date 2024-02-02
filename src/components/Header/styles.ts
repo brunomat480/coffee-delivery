@@ -1,15 +1,20 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const HeaderContainer = styled.header`
+export interface Product {
+  id: number
+  image: string;
+  name: string;
+  types: string[];
+  description: string;
+  price: number;
+  quantity: number
+}
+interface HeaderContainerProps {
+  $productCart: (Product | null)[];
+}
+
+export const HeaderContainer = styled.header<HeaderContainerProps>`
   padding-block: 2rem;
-
-  /* position: fixed;
-  width: 100%;
-  top: 0;
-  right: 0;
-
-  padding-inline: 2rem; */
-
 
   display: flex;
   justify-content: space-between;
@@ -23,8 +28,24 @@ export const HeaderContainer = styled.header`
     a {
       padding: .5rem;
       border-radius: 6px;
+      position: relative;
 
       background: ${({ theme }) => theme.colors['yellow-light']};
+
+      ${({ $productCart }) => $productCart.length > 0 && css`
+        &::after {
+          content: '${$productCart.length}';
+          padding: .5rem;
+          font-size: .75rem;
+          font-weight: 800;
+          color: ${({ theme }) => theme.colors.background};
+          clip-path: circle();
+          background: ${({ theme }) => theme.colors['yellow-dark']};
+          position: absolute;
+          top: -0.8rem;
+          right: -0.7rem;
+        }
+      `}
     }
   }
 `;

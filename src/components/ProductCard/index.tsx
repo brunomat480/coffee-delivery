@@ -2,7 +2,8 @@ import { Minus, Plus, ShoppingCart } from '@phosphor-icons/react';
 import { useTheme } from 'styled-components';
 import { ButtonAddProduct, Price, ProductCardContainer, ProductControls, QuantityProducts, Type, TypeGroups } from './styles';
 import { formatCurrency } from '../../utils/formatCurrency';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { ProductContext } from '../../context/ProductsContext';
 
 
 interface ProductType {
@@ -12,40 +13,37 @@ interface ProductType {
   types: string[];
   description: string;
   price: number;
+  quantity: number
 }
 interface ProductCardProps {
   product: ProductType;
-  onAddProductCart: () => void;
-  onProductQuantityControl: (quantity: number) => void
 }
 
 export function ProductCard({
   product,
-  onAddProductCart,
-  onProductQuantityControl
 }: ProductCardProps) {
   const { colors } = useTheme();
+  const { handleAddProductCart, handleProductQuantityControl } = useContext(ProductContext);
+
 
   const [quantityProducts, setQuantityProducts] = useState(1);
 
   function handleAddQuantityOfProductToCart() {
-    setQuantityProducts((state) => state + 1);
-    onProductQuantityControl(quantityProducts + 1);
+    const addNewQuantity = quantityProducts + 1;
+    setQuantityProducts(addNewQuantity);
+    handleProductQuantityControl(addNewQuantity);
   }
 
   function handleRemoveProductQuantityFromCart() {
-    setQuantityProducts((state) => {
-      if (state !== 1) {
-        return state - 1;
-      }
+    const removeNewQuantity = quantityProducts !== 1 ? quantityProducts - 1 : 1;
 
-      return 1;
-    });
-    onProductQuantityControl(quantityProducts + 1);
+    setQuantityProducts(removeNewQuantity);
+
+    handleProductQuantityControl(removeNewQuantity);
   }
 
   function handleAddProduct() {
-    onAddProductCart();
+    handleAddProductCart(product);
     setQuantityProducts(1);
   }
 
@@ -73,7 +71,6 @@ export function ProductCard({
               <Minus color={colors.purple} size={14} />
             </button>
             <span>{quantityProducts}</span>
-            
             <button type="button" onClick={handleAddQuantityOfProductToCart}>
               <Plus color={colors.purple} size={14} />
             </button>
