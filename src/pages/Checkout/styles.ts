@@ -106,8 +106,6 @@ export const Form = styled.div`
   }
 
   .location {
-
-
     div {
       width: 100%;
       display: flex;
