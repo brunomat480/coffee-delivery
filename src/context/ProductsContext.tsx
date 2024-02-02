@@ -36,6 +36,7 @@ export function ProductsContextsProvider({ children }: ProductsContextsProviderP
         product?.id === coffee.id ? { ...product, quantity: product.quantity + quantityProductAdd } : product
       )));
     }
+
     setQuantityProductAdd(1);
   }
 
