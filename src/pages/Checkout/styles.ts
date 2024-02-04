@@ -2,29 +2,39 @@ import styled, { css } from 'styled-components';
 
 export const CheckoutContainer = styled.div`
   margin-top: 9rem;
+`;
 
+export const FormGroup = styled.form`
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+`;
+
+export const FormContainer = styled.div`
   h2 {
     font-family: 'Baloo 2', sans-serif;
     font-size: 1.125rem;
   }
 `;
 
-export const FormGroup = styled.form``;
+export const Form = styled.div`
+  margin-top: 0.9375rem;
 
-export const FormContainer = styled.div`
-  margin-top: .9375rem;
+  background: ${({ theme }) => theme.colors['base-card']};
   padding: 2.5rem;
   width: 40rem;
-  background: ${({ theme }) => theme.colors['base-card']};
   border-radius: 6px;
 
   header {
+    margin-bottom: 2rem;
+
     display: flex;
     gap: .5rem;
     align-items: start;
 
     div {
       line-height: 130%;
+      display: block;
 
       h3 {
         font-size: 1rem;
@@ -40,9 +50,7 @@ export const FormContainer = styled.div`
   }
 `;
 
-export const Form = styled.div`
-  margin-top: 2rem;
-
+export const InputGroup = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -57,6 +65,12 @@ export const Form = styled.div`
     color: ${({ theme }) => theme.colors['base-text']};
     font-size: .875rem;
     font-weight: 400;
+
+    &[type=number]::-webkit-outer-spin-button,
+    &[type=number]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
 
     &:focus {
       border-color: ${({ theme }) => theme.colors['yellow-dark']};
@@ -75,7 +89,6 @@ export const Form = styled.div`
   div {
     display: flex;
     align-items: center;
-    /* justify-content: space-between; */
     gap: .75rem;
 
     .input {
@@ -182,6 +195,7 @@ export const PaymentButton = styled.button<PaymentButtonProps>`
   border-radius: 6px;
 
   cursor: pointer;
+  transition: background .1s;
 
   ${({ $payment }) => $payment && css`
     border: 2px solid ${({ theme }) => theme.colors.purple};
@@ -189,5 +203,168 @@ export const PaymentButton = styled.button<PaymentButtonProps>`
 
   &:focus {
     border: 2px solid ${({ theme }) => theme.colors.purple};
+  }
+
+  &:hover {
+    background: ${({ theme }) => theme.colors['base-hover']}
+  }
+`;
+
+export const CartContainer = styled.div`
+  h2 {
+    font-family: 'Baloo 2', sans-serif;
+    font-size: 1.125rem;
+  }
+`;
+
+export const Cart = styled.div`
+  width: 28rem;
+  padding: 2.5rem;
+  margin-top: 0.9375rem;
+  background: ${({ theme }) => theme.colors['base-card']};
+  border-radius: 6px 36px;
+`;
+
+export const Product = styled.div`
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+
+  border-bottom: 1px solid ${({ theme }) => theme.colors['base-button']};
+  padding-bottom: 1.5rem;
+
+  img {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .control-product {
+    display: flex;
+    gap: 1.25rem;
+
+    div {
+      h3 {
+        font-size: 1rem;
+        font-weight: 400;
+        color: ${({ theme }) => theme.colors['base-subtitle']};
+      }
+    }
+
+    .button-group {
+      margin-top: .5rem;
+
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+  }
+
+  & > span {
+    font-family: 'Baloo 2', sans-serif;
+    font-size: 1.125rem;
+    line-height: 130%;
+    color: ${({ theme }) => theme.colors['base-text']};
+  }
+`;
+
+export const QuantityProducts = styled.div`
+  height: 2rem;
+  padding-inline: .5rem;
+  border-radius: 6px;
+
+  background: ${({ theme }) => theme.colors['base-button']};
+
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+
+  font-size: .875rem;
+
+  button {
+    cursor: pointer;
+
+    &:hover {
+      svg {
+        fill: ${({ theme }) => theme.colors['purple-dark']};
+      }
+    }
+  }
+`;
+
+export const ButtonRemover = styled.button`
+  padding: .5rem;
+  background: ${({ theme }) => theme.colors['base-button']};
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.colors['base-text']};
+  border-radius: 6px;
+
+  display: flex;
+  align-items: center;
+  gap: .25rem;
+
+  cursor: pointer;
+
+  &:hover {
+    background: ${({ theme }) => theme.colors['base-hover']};
+  }
+`;
+
+export const PricesGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+
+  margin-top: 1.5rem;
+
+  div {
+    display: flex;
+    justify-content: space-between;
+
+    small {
+      font-size: .875rem;
+      font-weight: 400;
+      color: ${({ theme }) => theme.colors['base-text']};
+    }
+
+    span {
+      font-size: 1rem;
+      font-weight: 400;
+      color: ${({ theme }) => theme.colors['base-text']};
+    }
+
+    &:last-child {
+      span {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: ${({ theme }) => theme.colors['base-subtitle']};
+      }
+
+      small {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: ${({ theme }) => theme.colors['base-subtitle']};
+      }
+    }
+  }
+
+
+`;
+
+export const ButtonContainer = styled.button`
+  width: 100%;
+  margin-top: 1.5rem;
+  padding-block: .75rem;
+  background: ${({ theme }) => theme.colors.yellow};
+  border-radius: 6px;
+
+  font-size: .75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.colors.white};
+  transition: background .1s;
+  cursor: pointer;
+
+  &:hover {
+    background: ${({ theme }) => theme.colors['yellow-dark']};
   }
 `;
