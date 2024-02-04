@@ -8,13 +8,15 @@ interface Product {
   types: string[];
   description: string;
   price: number;
-  quantity: number
+  quantity: number;
 }
 
 interface ProductContextType {
   productCart: (Product | null)[]
   handleAddProductCart: (coffee: Product) => void;
   handleProductQuantityControl: (quantity: number) => void;
+  setControlProductCart: (products: (Product | null)[]) => void;
+  setUpdateProductCard: (products: (Product | null)[]) => void;
 }
 
 export const ProductContext = createContext({} as ProductContextType);
@@ -44,8 +46,23 @@ export function ProductsContextsProvider({ children }: ProductsContextsProviderP
     setQuantityProductAdd((state) => state <= 0 ? 1 : quantity);
   }
 
+  function setControlProductCart(products: (Product | null)[]) {
+    setProductCart(products);
+  }
+
+  function setUpdateProductCard(products: (Product | null)[]) {
+    setProductCart(products);
+  }
+
   return (
-    <ProductContext.Provider value={{ productCart, handleAddProductCart, handleProductQuantityControl }}>
+    <ProductContext.Provider value={{
+      productCart,
+      handleAddProductCart,
+      handleProductQuantityControl,
+      setControlProductCart,
+      setUpdateProductCard,
+    }}
+    >
       {children}
     </ProductContext.Provider>
   );

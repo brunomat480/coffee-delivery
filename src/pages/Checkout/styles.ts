@@ -219,7 +219,7 @@ export const CartContainer = styled.div`
 
 export const Cart = styled.div`
   width: 28rem;
-  padding: 2.5rem;
+  padding: calc(2.5rem - 1.5rem) 2.5rem 2.5rem;
   margin-top: 0.9375rem;
   background: ${({ theme }) => theme.colors['base-card']};
   border-radius: 6px 36px;
@@ -231,7 +231,7 @@ export const Product = styled.div`
   justify-content: space-between;
 
   border-bottom: 1px solid ${({ theme }) => theme.colors['base-button']};
-  padding-bottom: 1.5rem;
+  padding-block: 1.5rem;
 
   img {
     width: 4rem;

@@ -1,10 +1,11 @@
 import { Bank, CreditCard, CurrencyDollar, MapPinLine, Minus, Money, Plus, Trash } from '@phosphor-icons/react';
 import { ButtonContainer, ButtonRemover, Cart, CartContainer, CheckoutContainer, Form, FormContainer, FormGroup, FormPaymentContiner, FormPaymentGroup, InputGroup, PaymentButton, PricesGroup, Product, QuantityProducts } from './styles';
 import { useTheme } from 'styled-components';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import coffee from '/cafes/traditional-express.svg';
+import { ProductContext } from '../../context/ProductsContext';
+import { formatCurrency } from '../../utils/formatCurrency';
 
 const paymentOptions = [
   {
@@ -23,13 +24,38 @@ const paymentOptions = [
 
 export function Checkout() {
   const { colors } = useTheme();
+  const { productCart, setControlProductCart, setUpdateProductCard } = useContext(ProductContext);
 
   const [formPayment, setFormPayment] = useState('');
 
   const { register } = useForm();
 
+
+  const totalItens = productCart.reduce((accumulator, product) => {
+    return accumulator + product!.price * product!.quantity;
+  }, 0);
+
   function handleSelectingPaymentMethod(payment: string) {
     setFormPayment(payment);
+  }
+
+  function handleRemoveProduct(id: number) {
+    const filterProduct = productCart.filter((product) => product?.id !== id);
+
+    setControlProductCart(filterProduct);
+  }
+
+  function handleAddQuantityProduct(id: number, quantity: number) {
+    const updateProductCart = productCart.map((product) => product?.id === id ? { ...product, quantity: quantity + 1 } : product);
+
+    setUpdateProductCard(updateProductCart);
+  }
+
+  function handleRemoveQuantityProduct(id: number, quantity: number) {
+    const transformedValue = quantity !== 1 ? quantity - 1 : 1;
+    const updateProductCart = productCart.map((product) => product?.id === id ? { ...product, quantity: transformedValue } : product);
+
+    setUpdateProductCard(updateProductCart);
   }
 
   return (
@@ -120,49 +146,53 @@ export function Checkout() {
           <h2>Cafés selecionados</h2>
 
           <Cart>
-            <Product>
-              <div className="control-product">
-                <img src={coffee} alt="" />
+            {productCart.map((product) => (
+              <Product key={product?.id}>
+                <div className="control-product">
+                  <img src={product?.image} alt="" />
 
-                <div>
-                  <h3>Expresso Tradicional</h3>
+                  <div>
+                    <h3>{product?.name}</h3>
 
-                  <div className="button-group">
-                    <QuantityProducts>
-                      <button type="button">
-                        <Minus color={colors.purple} size={14} />
-                      </button>
-                      <span>1</span>
-                      <button type="button">
-                        <Plus color={colors.purple} size={14} />
-                      </button>
-                    </QuantityProducts>
+                    <div className="button-group">
+                      <QuantityProducts>
+                        <button type="button" onClick={() => handleRemoveQuantityProduct(product!.id, product!.quantity)}>
+                          <Minus color={colors.purple} size={14} />
+                        </button>
+                        <span>{product?.quantity}</span>
+                        <button type="button" onClick={() => handleAddQuantityProduct(product!.id, product!.quantity)}>
+                          <Plus color={colors.purple} size={14} />
+                        </button>
+                      </QuantityProducts>
 
-                    <ButtonRemover type="button">
-                      <Trash color={colors.purple} size={16} />
-                      remover
-                    </ButtonRemover>
+                      <ButtonRemover type="button" onClick={() => handleRemoveProduct(product!.id)}>
+                        <Trash color={colors.purple} size={16} />
+                        remover
+                      </ButtonRemover>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <span>R$ 9,90</span>
-            </Product>
+                <span>R$ {formatCurrency(product!.price * product!.quantity)}</span>
+              </Product>
+            ))}
 
             <PricesGroup>
               <div>
                 <small>Total de itens</small>
-                <span>R$ 29,70</span>
+                <span>
+                  R$ {formatCurrency(totalItens)}
+                </span>
               </div>
 
               <div>
                 <small>Entrega</small>
-                <span>R$ 3,50</span>
+                <span>{productCart.length === 0 ? 'R$ 0,00' : 'R$ 3,50'}</span>
               </div>
 
               <div className="total">
                 <small>Total</small>
-                <span>R$ 33,20</span>
+                <span>R$ {productCart.length === 0 ? formatCurrency(totalItens) : formatCurrency(totalItens + 3.50)}</span>
               </div>
             </PricesGroup>
 
