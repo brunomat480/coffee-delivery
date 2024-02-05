@@ -1,9 +1,12 @@
 import { Coffee, Package, ShoppingCart, Timer } from '@phosphor-icons/react';
 import { HeaderContainer, Item, ItemsContainer, ItemsGroup, ProductsContainer } from './styles';
 import { useTheme } from 'styled-components';
+import { ProductCard } from '../../components/ProductCard';
+import { toast } from 'react-toastify';
+import 'react-toastify/ReactToastify.css';
 
 import coffee from '../../assets/coffee.svg';
-import { ProductCard } from '../../components/ProductCard';
+import { WarningNotifications } from '../../components/WarningNotifications';
 
 const cafes = [
   {
@@ -134,9 +137,15 @@ const cafes = [
   }
 ];
 
-
 export function Home() {
   const { colors } = useTheme();
+
+
+  function notify(nameProduct: string) {
+    toast.success(`${nameProduct} foi adicionado ao carrinho!`, {
+      position: 'bottom-right'
+    });
+  }
 
   return (
     <>
@@ -194,10 +203,12 @@ export function Home() {
             <ProductCard
               key={coffee.id}
               product={coffee}
+              notify={notify}
             />
           ))}
         </div>
       </ProductsContainer>
+      <WarningNotifications />
     </>
   );
 }

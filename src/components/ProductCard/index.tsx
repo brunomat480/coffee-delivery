@@ -17,14 +17,15 @@ interface ProductType {
 }
 interface ProductCardProps {
   product: ProductType;
+  notify: (nameProduct: string) => void;
 }
 
 export function ProductCard({
   product,
+  notify
 }: ProductCardProps) {
   const { colors } = useTheme();
   const { handleAddProductCart, handleProductQuantityControl } = useContext(ProductContext);
-
 
   const [quantityProducts, setQuantityProducts] = useState(1);
 
@@ -45,6 +46,7 @@ export function ProductCard({
   function handleAddProduct() {
     handleAddProductCart(product);
     setQuantityProducts(1);
+    notify(product.name);
   }
 
   return (

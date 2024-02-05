@@ -1,7 +1,7 @@
 import { ReactNode, createContext, useState } from 'react';
 
 
-interface Product {
+export interface Product {
   id: number
   image: string;
   name: string;

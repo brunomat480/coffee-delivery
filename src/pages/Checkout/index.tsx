@@ -1,26 +1,29 @@
-import { Bank, CreditCard, CurrencyDollar, MapPinLine, Minus, Money, Plus, Trash } from '@phosphor-icons/react';
-import { ButtonContainer, ButtonRemover, Cart, CartContainer, CheckoutContainer, Form, FormContainer, FormGroup, FormPaymentContiner, FormPaymentGroup, InputGroup, PaymentButton, PricesGroup, Product, QuantityProducts } from './styles';
-import { useTheme } from 'styled-components';
 import { useContext, useState } from 'react';
+import * as zod from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Bank, CreditCard, CurrencyDollar, MapPinLine, Money } from '@phosphor-icons/react';
+import { ButtonContainer, Cart, CartContainer, CheckoutContainer, Form, FormContainer, FormGroup, FormPaymentContiner, FormPaymentGroup, InputGroup, PaymentButton, PricesGroup } from './styles';
+import { useTheme } from 'styled-components';
 import { useForm } from 'react-hook-form';
 
 import { ProductContext } from '../../context/ProductsContext';
 import { formatCurrency } from '../../utils/formatCurrency';
+import { ProductCard } from './components/ProductCard';
+import { toast } from 'react-toastify';
+import { WarningNotifications } from '../../components/WarningNotifications';
+import { formatCep } from '../../utils/formatCep';
 
-const paymentOptions = [
-  {
-    icon: <CreditCard color='#8047F8' size={16} />,
-    name: 'cartão de crédito',
-  },
-  {
-    icon: <Bank color='#8047F8' size={16} />,
-    name: 'cartão de débito',
-  },
-  {
-    icon: <Money color='#8047F8' size={16} />,
-    name: 'dinheiro',
-  },
-];
+const sendPurchaseInformationFormValidationSchema = zod.object({
+  cep: zod.string().min(1, 'Informe o CEP'),
+  road: zod.string().min(1, 'Informe a rua'),
+  number: zod.number().min(1, 'Informe o número da casa'),
+  complement: zod.string(),
+  neighborhood: zod.string().min(1, 'Informe o bairro'),
+  city: zod.string().min(1, 'informe sua cidade'),
+  fu: zod.string().min(2, 'Informe seu estado'),
+});
+
+type SendPurchaseInformationFormData = zod.infer<typeof sendPurchaseInformationFormValidationSchema>
 
 export function Checkout() {
   const { colors } = useTheme();
@@ -28,12 +31,35 @@ export function Checkout() {
 
   const [formPayment, setFormPayment] = useState('');
 
-  const { register } = useForm();
-
-
   const totalItens = productCart.reduce((accumulator, product) => {
     return accumulator + product!.price * product!.quantity;
   }, 0);
+
+  const { register, handleSubmit, watch } = useForm<SendPurchaseInformationFormData>({
+    resolver: zodResolver(sendPurchaseInformationFormValidationSchema),
+    defaultValues: {
+      cep: '',
+      city: '',
+      complement: '',
+      fu: '',
+      neighborhood: '',
+      number: undefined,
+      road: '',
+    }
+  });
+
+  function notify() {
+    toast.warning('Preencha todas as infomações', {
+      position: 'top-right'
+    });
+  }
+
+  function handleSendPurchaseInformation(data: SendPurchaseInformationFormData) {
+
+    if (data) {
+      notify();
+    }
+  }
 
   function handleSelectingPaymentMethod(payment: string) {
     setFormPayment(payment);
@@ -58,9 +84,15 @@ export function Checkout() {
     setUpdateProductCard(updateProductCart);
   }
 
+  const cep = watch('cep');
+  const cepMask = formatCep(cep);
+
+
+  const isSubmitDisabled = productCart.length === 0;
+
   return (
     <CheckoutContainer>
-      <FormGroup>
+      <FormGroup onSubmit={handleSubmit(handleSendPurchaseInformation)}>
         <FormContainer>
           <h2>Complete seu pedido</h2>
           <Form>
@@ -75,21 +107,26 @@ export function Checkout() {
             <InputGroup>
               <input
                 placeholder="CEP"
+                disabled={isSubmitDisabled}
+                value={cepMask}
                 {...register('cep')}
               />
               <input
                 placeholder="Rua"
+                disabled={isSubmitDisabled}
                 {...register('road')}
               />
               <div>
                 <input
                   type="number"
                   placeholder="Número"
+                  disabled={isSubmitDisabled}
                   {...register('number', { valueAsNumber: true })}
                 />
                 <div className="input">
                   <input
                     placeholder="Complemento"
+                    disabled={isSubmitDisabled}
                     {...register('complement')}
                   />
                   <small>opcional</small>
@@ -99,15 +136,18 @@ export function Checkout() {
                 <div>
                   <input
                     placeholder="Bairro"
+                    disabled={isSubmitDisabled}
                     {...register('neighborhood')}
                   />
                   <input
                     placeholder="Cidade"
+                    disabled={isSubmitDisabled}
                     {...register('city')}
                   />
                 </div>
                 <input
                   placeholder="UF"
+                  disabled={isSubmitDisabled}
                   minLength={2}
                   maxLength={2}
                   {...register('fu')}
@@ -127,17 +167,33 @@ export function Checkout() {
             </header>
 
             <FormPaymentGroup>
-              {paymentOptions.map((option) => (
-                <PaymentButton
-                  key={option.name}
-                  type="button"
-                  onClick={() => handleSelectingPaymentMethod(option.name)}
-                  $payment={formPayment === option.name}
-                >
-                  {option.icon}
-                  {option.name}
-                </PaymentButton>
-              ))}
+              <PaymentButton
+                type="button"
+                disabled={isSubmitDisabled}
+                $payment={formPayment === 'cartão de crédito'}
+                onClick={() => handleSelectingPaymentMethod('cartão de crédito')}
+              >
+                <CreditCard color='#8047F8' size={16} />
+                cartão de crédito
+              </PaymentButton>
+              <PaymentButton
+                type="button"
+                disabled={isSubmitDisabled}
+                $payment={formPayment === 'cartão de débito'}
+                onClick={() => handleSelectingPaymentMethod('cartão de débito')}
+              >
+                <Bank color='#8047F8' size={16} />
+                cartão de débito
+              </PaymentButton>
+              <PaymentButton
+                type="button"
+                disabled={isSubmitDisabled}
+                $payment={formPayment === 'dinheiro'}
+                onClick={() => handleSelectingPaymentMethod('dinheiro')}
+              >
+                <Money color='#8047F8' size={16} />
+                cartão de débito
+              </PaymentButton>
             </FormPaymentGroup>
           </FormPaymentContiner>
         </FormContainer>
@@ -147,34 +203,13 @@ export function Checkout() {
 
           <Cart>
             {productCart.map((product) => (
-              <Product key={product?.id}>
-                <div className="control-product">
-                  <img src={product?.image} alt="" />
-
-                  <div>
-                    <h3>{product?.name}</h3>
-
-                    <div className="button-group">
-                      <QuantityProducts>
-                        <button type="button" onClick={() => handleRemoveQuantityProduct(product!.id, product!.quantity)}>
-                          <Minus color={colors.purple} size={14} />
-                        </button>
-                        <span>{product?.quantity}</span>
-                        <button type="button" onClick={() => handleAddQuantityProduct(product!.id, product!.quantity)}>
-                          <Plus color={colors.purple} size={14} />
-                        </button>
-                      </QuantityProducts>
-
-                      <ButtonRemover type="button" onClick={() => handleRemoveProduct(product!.id)}>
-                        <Trash color={colors.purple} size={16} />
-                        remover
-                      </ButtonRemover>
-                    </div>
-                  </div>
-                </div>
-
-                <span>R$ {formatCurrency(product!.price * product!.quantity)}</span>
-              </Product>
+              <ProductCard
+                key={product?.id}
+                product={product}
+                setAddQuantityProduct={handleAddQuantityProduct}
+                setRemoveQuantityProduct={handleRemoveQuantityProduct}
+                setRemoveProduct={handleRemoveProduct}
+              />
             ))}
 
             <PricesGroup>
@@ -196,12 +231,13 @@ export function Checkout() {
               </div>
             </PricesGroup>
 
-            <ButtonContainer type="submit">
+            <ButtonContainer disabled={isSubmitDisabled} type="submit">
               confirmar pedido
             </ButtonContainer>
           </Cart>
         </CartContainer>
       </FormGroup>
+      <WarningNotifications />
     </CheckoutContainer >
   );
 }
