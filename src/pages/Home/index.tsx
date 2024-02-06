@@ -140,7 +140,6 @@ const cafes = [
 export function Home() {
   const { colors } = useTheme();
 
-
   function notify(nameProduct: string) {
     toast.success(`${nameProduct} foi adicionado ao carrinho!`, {
       position: 'bottom-right'

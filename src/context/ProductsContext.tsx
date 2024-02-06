@@ -16,7 +16,6 @@ interface ProductContextType {
   handleAddProductCart: (coffee: Product) => void;
   handleProductQuantityControl: (quantity: number) => void;
   setControlProductCart: (products: (Product | null)[]) => void;
-  setUpdateProductCard: (products: (Product | null)[]) => void;
 }
 
 export const ProductContext = createContext({} as ProductContextType);
@@ -50,17 +49,12 @@ export function ProductsContextsProvider({ children }: ProductsContextsProviderP
     setProductCart(products);
   }
 
-  function setUpdateProductCard(products: (Product | null)[]) {
-    setProductCart(products);
-  }
-
   return (
     <ProductContext.Provider value={{
       productCart,
       handleAddProductCart,
       handleProductQuantityControl,
       setControlProductCart,
-      setUpdateProductCard,
     }}
     >
       {children}
