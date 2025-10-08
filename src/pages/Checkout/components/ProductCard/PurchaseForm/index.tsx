@@ -7,6 +7,7 @@ import {
 } from '@phosphor-icons/react';
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { useTheme } from 'styled-components';
 import {
   Form,
@@ -22,8 +23,6 @@ interface FormProps {
   formPayment: string
   setSelectingPaymentMethod: (payment: string) => void
 }
-
-
 
 type Cep =
   | {
@@ -53,7 +52,9 @@ export function PurchaseForm({ isSubmitDisabled, setSelectingPaymentMethod, form
         const data: Cep = await response.json();
 
         if ('erro' in data) {
-          console.log('Erro');
+          toast.error('Cep não encontrado!', {
+            position: 'bottom-right'
+          });
           return;
         }
 
