@@ -5,6 +5,9 @@ import {
   MapPinLine,
   Money
 } from '@phosphor-icons/react';
+import { useEffect } from 'react';
+import { useFormContext } from 'react-hook-form';
+import { useTheme } from 'styled-components';
 import {
   Form,
   FormContainer,
@@ -13,8 +16,6 @@ import {
   InputGroup,
   PaymentButton
 } from './styles';
-import { useTheme } from 'styled-components';
-import { useFormContext } from 'react-hook-form';
 
 interface FormProps {
   isSubmitDisabled: boolean;
@@ -22,9 +23,49 @@ interface FormProps {
   setSelectingPaymentMethod: (payment: string) => void
 }
 
+
+
+type Cep =
+  | {
+    localidade: string;
+    logradouro: string;
+    bairro: string;
+    uf: string;
+  }
+  | {
+    erro: 'true';
+  };
+
 export function PurchaseForm({ isSubmitDisabled, setSelectingPaymentMethod, formPayment }: FormProps) {
   const { colors } = useTheme();
-  const { register } = useFormContext();
+  const { register, watch, setValue } = useFormContext();
+
+  const cepWatch = watch('cep');
+
+  useEffect(() => {
+    async function fetchLocation() {
+      const cepMask = cepWatch.replace(/\D/g, '').replace(/(\d{5})(\d)/, '$1-$2');
+      setValue('cep', cepMask);
+
+      const cep = cepMask.replace(/\D/g, '');
+      if (cep.length === 8) {
+        const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+        const data: Cep = await response.json();
+
+        if ('erro' in data) {
+          console.log('Erro');
+          return;
+        }
+
+        setValue('city', data?.localidade);
+        setValue('road', data?.logradouro);
+        setValue('fu', data?.uf);
+        setValue('neighborhood', data?.bairro);
+      }
+    }
+
+    fetchLocation();
+  }, [cepWatch]);
 
   return (
     <FormContainer>
@@ -42,6 +83,8 @@ export function PurchaseForm({ isSubmitDisabled, setSelectingPaymentMethod, form
           <input
             placeholder="CEP"
             disabled={isSubmitDisabled}
+            minLength={9}
+            maxLength={9}
             {...register('cep')}
           />
           <input
