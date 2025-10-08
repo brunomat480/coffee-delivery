@@ -15,7 +15,7 @@
 
 Clone o repositório:
 ```bash
-git clone https://github.com/brunomat480/ignite-timer.git
+git clone https://github.com/brunomat480/coffee-delivery.git
 ```
 
 Baixe as dependencias:
