@@ -9,8 +9,6 @@
 
 ##
 
-#### web
-
 Clone o repositório:
 ```bash
 git clone https://github.com/brunomat480/coffee-delivery.git
@@ -26,7 +24,6 @@ npm i
 ```
 ##
 
-#### web
 inicie a aplicação:
 ```bash
 yarn dev
